@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificationExecutor<Topic> {
 
@@ -19,5 +20,7 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
     List<Topic> findAllByCategory(Category category);
 
 
+    void save(Topic topic);
 
+    Optional<Topic> findById(Long id);
 }
