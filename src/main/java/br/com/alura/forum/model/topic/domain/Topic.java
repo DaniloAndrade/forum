@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -133,5 +134,19 @@ public class Topic {
 
 	public void close() {
 		this.status.close(this);
+	}
+
+	@Override
+	public String toString() {
+		return new StringJoiner(", ", Topic.class.getSimpleName() + "[", "]")
+				.add("id=" + id)
+				.add("shortDescription='" + shortDescription + "'")
+				.add("content='" + content + "'")
+				.add("creationInstant=" + creationInstant)
+				.add("lastUpdate=" + lastUpdate)
+				.add("status=" + status)
+				.add("owner=" + owner)
+				.add("course=" + course)
+				.toString();
 	}
 }

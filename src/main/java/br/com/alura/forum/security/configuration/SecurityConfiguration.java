@@ -1,4 +1,4 @@
-package br.com.alura.forum.configuration;
+package br.com.alura.forum.security.configuration;
 
 import br.com.alura.forum.security.filter.JwtAuthenticationFilter;
 import br.com.alura.forum.security.jwt.TokenManager;
@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+@Order(2)
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -42,8 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/topics/**").permitAll()
+        http.antMatcher("/api/**")
+            .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/api/topics/**").permitAll()
+//                .antMatchers("/api/topics/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
         .anyRequest().authenticated()
         .and()
@@ -76,7 +81,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/**.html",
                         "/v2/api-docs", "/webjars/**",
-                        "/configuration/**", "/swagger-resources/**");
+                        "/configuration/**", "/swagger-resources/**",
+                        "/css/**", "/**.ico", "/js/**", "/img/**");
     }
 
 

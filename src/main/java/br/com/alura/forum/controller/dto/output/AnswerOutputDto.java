@@ -3,6 +3,8 @@ package br.com.alura.forum.controller.dto.output;
 import br.com.alura.forum.model.Answer;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnswerOutputDto {
 
@@ -22,6 +24,10 @@ public class AnswerOutputDto {
         this.creationTime = answer.getCreationTime();
         this.solution = answer.isSolution();
         this.ownerName = answer.getOwnerName();
+    }
+
+    public static List<AnswerOutputDto> listFromAnswers(List<Answer> answers) {
+        return answers.stream().map(AnswerOutputDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {
