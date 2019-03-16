@@ -23,7 +23,7 @@ public interface TopicRepository extends Repository<Topic, Long>, JpaSpecificati
     List<Topic> findAllByCategory(Category category);
 
 
-    void save(Topic topic);
+    Topic save(Topic topic);
 
     Optional<Topic> findById(Long id);
 
